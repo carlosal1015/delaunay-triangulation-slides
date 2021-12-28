@@ -105,7 +105,7 @@
 \begin{frame}{Introduction: Overview}
   Educational Problems:
   \begin{itemize}
-    \item Duality to Voronoi Diagrams
+    \item Duality to Voronoi Diagrams, Dirichlet
     \item Incremental, Sweepline, Divide-and-Conquer Algorithms
     \item Varying Data Structures
   \end{itemize}
@@ -119,14 +119,80 @@
 \end{frame}
 
 \section{Background}
+\begin{frame}{Background: Triangle}
+  % Definition of a triangle can be difficult.
+  % Hence, we use and indirect approach.
+  Definition: (Triangle)\\
+  We say that three points $A, B, C \in \setReal^2$ are building a triangle if they are affine independent.
+  \bigskip
+
+  Definition: (Circumcircle)\\
+  If $A, B, C \in \setReal^2$ are building a triangle, we define the circumcircle of the built triangle to be the circle that intersects with $A$, $B$, and $C$.
+  We call its center the circumcenter of the triangle.
+\end{frame}
+
+\begin{frame}{Background: Triangulation}
+  Definition: (Triangulation)
+  \begin{itemize}
+    \item $n\in\setNatural, n\geq 3$
+    \item $\forall i\in\setNatural, i \leq n: \quad x_i \in \setReal^2$ affine independent
+    \item $\mathscr{V}\define \set{x_i}{i\in\setNatural, i \leq n}$
+    \item $\mathscr{T}(\mathscr{V})$ is a planar graph such that all faces are triangles when vertices are drawn at their given positions.
+    \item $\mathscr{DT}(\mathscr{V})$ is a Delaunay triangulation if it is a triangulation such that for all triangle faces the interior of the circumcircle contains no other points of $\mathscr{V}$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Background: Properties of Delaunay Triangulation}
+  \begin{itemize}
+    \item Duality to Voronoi Diagram
+    \item always exists
+    \item If no points are cocircular, unique
+    \item optimality: maximization of the minimum angle of all angles
+    \item boundary is convex hull
+    \item Delaunay condition implies triangulation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Background: Existence and Uniqueness of Delaunay Triangulation}
+  % algorithms may already be a proof
+  % maybe by induction
+  % edge-flip
+\end{frame}
 
 \section{Geometric Primitives}
+\begin{frame}{Geometric Primitives: Counter-Clockwise}
+  \[
+    \begin{vmatrix}
+      A_x & A_y & 1 \\
+      B_x & B_y & 1 \\
+      C_x & C_y & 1 \\
+    \end{vmatrix}
+    > 0
+  \]
+\end{frame}
+
+\begin{frame}{Geometric Primitives: Inside Circumcircle}
+  \[
+    \begin{vmatrix}
+      A_x & A_y & A_x^2 + A_y^2 & 1 \\
+      B_x & B_y & B_x^2 + B_y^2 & 1 \\
+      C_x & C_y & C_x^2 + C_y^2 & 1 \\
+      D_x & D_y & D_x^2 + D_y^2 & 1 \\
+    \end{vmatrix}
+    > 0
+  \]
+\end{frame}
 
 \section{Data Structures}
 
 \section{Algorithm}
 
-\section{Implementation Aspects}
+\section{Implementation}
+\begin{frame}{Implementation}
+  \begin{itemize}
+    \item Geometric Primitives need exact computation and therefore arbitrary precision
+  \end{itemize}
+\end{frame}
 
 \section{Applications}
 
