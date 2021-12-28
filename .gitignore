@@ -1,0 +1,10 @@
+*
+!*/
+
+!*.tex
+!references.bib
+!*.pdf
+
+!makefile
+
+!.git*
