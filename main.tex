@@ -120,17 +120,19 @@
 \end{frame}
 
 \section{Background}
-\begin{frame}{Background: Triangle}
+\begin{frame}{Background: Triangle and Circumcircle}
   % Definition of a triangle can be difficult.
   % Hence, we use and indirect approach.
   \begin{minipage}[c]{0.45\textwidth}
-    Definition: (Triangle)\\
-    We say that three points $A, B, C \in \setReal^2$ are building a triangle if they are affine independent.
+    \textbf{Triangle} \\
+    $A, B, C \in \setReal^2$ affinely independent \\
+    define vertices of a triangle.
+
     \bigskip
 
-    Definition: (Circumcircle)\\
-    If $A, B, C \in \setReal^2$ are building a triangle, we define the circumcircle of the built triangle to be the circle that intersects with $A$, $B$, and $C$.
-    We call its center the circumcenter of the triangle.
+    \textbf{Circumcircle}\\
+    Circle that intersects with \\
+    all vertices of the triangle.
   \end{minipage}
   \hfill
   \begin{minipage}[c]{0.49\textwidth}
@@ -139,15 +141,135 @@
   \end{minipage}
 \end{frame}
 
+\begin{frame}{Background: Point Set}
+  \begin{minipage}[c]{0.45\textwidth}
+    \textbf{Point Set}\\
+    $\mathscr{V}\subset\setReal^2$ finite, $\#\mathscr{V}\geq 3$, \\
+    affinely span $\setReal^2$
+
+    \bigskip
+
+    \vphantom{%
+    \textbf{Triangulation}\\
+    Planar straight-line graph over $\mathscr{V}$ \\
+    such that its edges form a maximal subset of non-crossing edges.
+    }
+
+    \bigskip
+
+    \vphantom{
+    \textbf{Delaunay Triangulation}\\
+    Circumcircle of any triangle \\
+    contains no other points of $\mathscr{V}$.
+    }
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    % \centering
+    \includegraphics[width=0.9\textwidth]{figures/point-set.pdf}
+  \end{minipage}
+\end{frame}
+
 \begin{frame}{Background: Triangulation}
-  Definition: (Triangulation)
-  \begin{itemize}
-    \item $n\in\setNatural, n\geq 3$
-    \item $\forall i\in\setNatural, i \leq n: \quad x_i \in \setReal^2$ affine independent
-    \item $\mathscr{V}\define \set{x_i}{i\in\setNatural, i \leq n}$
-    \item $\mathscr{T}(\mathscr{V})$ is a planar graph such that all faces are triangles when vertices are drawn at their given positions.
-    \item $\mathscr{DT}(\mathscr{V})$ is a Delaunay triangulation if it is a triangulation such that for all triangle faces the interior of the circumcircle contains no other points of $\mathscr{V}$.
-  \end{itemize}
+  \begin{minipage}[c]{0.45\textwidth}
+    \textbf{Point Set}\\
+    $\mathscr{V}\subset\setReal^2$ finite, $\#\mathscr{V}\geq 3$, \\
+    affinely span $\setReal^2$
+
+    \bigskip
+
+    \textbf{Triangulation}\\
+    Planar straight-line graph over $\mathscr{V}$ \\
+    such that its edges form a maximal subset of non-crossing edges.
+
+    \bigskip
+
+    \vphantom{
+    \textbf{Delaunay Triangulation}\\
+    Circumcircle of any triangle \\
+    contains no other points of $\mathscr{V}$.
+    }
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    % \centering
+    \includegraphics[width=0.9\textwidth]{figures/triangulation.pdf}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Background: Delaunay Triangulation}
+  \begin{minipage}[c]{0.45\textwidth}
+    \textbf{Point Set}\\
+    $\mathscr{V}\subset\setReal^2$ finite, $\#\mathscr{V}\geq 3$, \\
+    affinely span $\setReal^2$
+
+    \bigskip
+
+    \textbf{Triangulation}\\
+    Planar straight-line graph over $\mathscr{V}$ \\
+    such that its edges form a maximal subset of non-crossing edges.
+
+    \bigskip
+
+    \textbf{Delaunay Triangulation}\\
+    Circumcircle of any triangle \\
+    contains no other points of $\mathscr{V}$.
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    % \centering
+    \includegraphics[width=0.9\textwidth]{figures/triangulation-circumcircle.pdf}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Background: Delaunay Triangulation}
+  \begin{minipage}[c]{0.45\textwidth}
+    \textbf{Point Set}\\
+    $\mathscr{V}\subset\setReal^2$ finite, $\#\mathscr{V}\geq 3$, \\
+    affinely span $\setReal^2$
+
+    \bigskip
+
+    \textbf{Triangulation}\\
+    Planar straight-line graph over $\mathscr{V}$ \\
+    such that its edges form a maximal subset of non-crossing edges.
+
+    \bigskip
+
+    \textbf{Delaunay Triangulation}\\
+    Circumcircle of any triangle \\
+    contains no other points of $\mathscr{V}$.
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    % \centering
+    \includegraphics[width=0.9\textwidth]{figures/delaunay-triangulation.pdf}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Background: Delaunay Triangulation}
+  \begin{minipage}[c]{0.45\textwidth}
+    \textbf{Point Set}\\
+    $\mathscr{V}\subset\setReal^2$ finite, $\#\mathscr{V}\geq 3$, \\
+    affinely span $\setReal^2$
+
+    \bigskip
+
+    \textbf{Triangulation}\\
+    Planar straight-line graph over $\mathscr{V}$ \\
+    such that its edges form a maximal subset of non-crossing edges.
+
+    \bigskip
+
+    \textbf{Delaunay Triangulation}\\
+    Circumcircle of any triangle \\
+    contains no other points of $\mathscr{V}$.
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    % \centering
+    \includegraphics[width=0.9\textwidth]{figures/delaunay-triangulation-circumcircle.pdf}
+  \end{minipage}
 \end{frame}
 
 \begin{frame}{Background: Properties of Delaunay Triangulation}

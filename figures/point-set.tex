@@ -1,0 +1,27 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+
+\usepackage{times}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}
+
+  \tkzDefPoint(0.0,1.0){v0}
+  \tkzDefPoint(1.0,0.5){v1}
+  \tkzDefPoint(0.5,1.7){v2}
+  \tkzDefPoint(1.5,2.5){v3}
+  \tkzDefPoint(0.5,2.5){v4}
+  \tkzDefPoint(1.3,1.3){v5}
+  \tkzDefPoint(2.0,1.0){v6}
+  \tkzDefPoint(2.0,2.0){v7}
+
+  \tkzDrawPoints(v0,v1,v2,v3,v4,v5,v6,v7)
+  % \tkzLabelPoints(v0,v1,v2,v3,v4,v5,v6,v7)
+
+\end{tikzpicture}
+\end{document}

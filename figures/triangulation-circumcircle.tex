@@ -86,7 +86,9 @@
 \definecolor{accent}{rgb}{0.9,0.9,0.9}
 
 \begin{document}
-\begin{tikzpicture}
+\begin{tikzpicture}[%
+  circle/.style={thin, dashed},
+]
 
   \tkzDefPoint(0.0,1.0){v0}
   \tkzDefPoint(1.0,0.5){v1}
@@ -106,6 +108,9 @@
 
   \tkzDrawPoints(v0,v1,v2,v3,v4,v5,v6,v7)
   % \tkzLabelPoints(v0,v1,v2,v3,v4,v5,v6,v7)
+
+  \tkzCircumCenter(v2,v3,v7)\tkzGetPoint{M}
+  \tkzDrawCircle[circle](M,v2)
 
 \end{tikzpicture}
 \end{document}

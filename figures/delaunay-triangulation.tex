@@ -83,8 +83,6 @@
 \usetikzlibrary {positioning}
 \usetikzlibrary{arrows.meta}
 
-\definecolor{accent}{rgb}{0.9,0.9,0.9}
-
 \begin{document}
 \begin{tikzpicture}
 
@@ -97,15 +95,16 @@
   \tkzDefPoint(2.0,1.0){v6}
   \tkzDefPoint(2.0,2.0){v7}
 
-  \draw[draw,fill=accent] (v2)--(v3)--(v7);
-
   % Convex Hull
   \tkzDrawSegments(v0,v1 v1,v6 v6,v7 v7,v3 v3,v4 v4,v0)
-  \tkzDrawSegments(v2,v0 v2,v1 v2,v3 v2,v4 v2,v7)
-  \tkzDrawSegments(v5,v1 v5,v2 v5,v6 v5,v7)
+  \tkzDrawSegments(v2,v0 v2,v4 v2,v3 v2,v1)
+  \tkzDrawSegments(v5,v2 v5,v6 v5,v7 v5,v1 v5,v3)
 
   \tkzDrawPoints(v0,v1,v2,v3,v4,v5,v6,v7)
   % \tkzLabelPoints(v0,v1,v2,v3,v4,v5,v6,v7)
+
+  % \tkzCircumCenter(v3,v5,v7)\tkzGetPoint{M}
+  % \tkzDrawCircle(M,v3)
 
 \end{tikzpicture}
 \end{document}
