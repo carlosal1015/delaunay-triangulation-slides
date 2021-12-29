@@ -1,0 +1,45 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+
+\usepackage{times}
+
+\usetikzlibrary {positioning}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{accent}{rgb}{0.9,0.9,0.9}
+
+\begin{document}
+\begin{tikzpicture}[%
+  radius/.style={thin, dashed},
+]
+
+  \tkzDefPoint(0,0){A}
+  \tkzDefPoint(2.5,0.5){B}
+  \tkzDefPoint(1.5,2.5){C}
+
+  \draw[draw,fill=accent] (A)--(B)--(C);
+  \tkzDrawSegments(A,B B,C C,A)
+  \tkzDrawPoint(A)
+  \tkzDrawPoint(B)
+  \tkzDrawPoint(C)
+
+  % circumcircle
+  \tkzCircumCenter(A,B,C)\tkzGetPoint{M}
+  \tkzDrawPoint(M)
+  \tkzDrawCircle(M,A)
+
+  \tkzDrawSegment[radius](M,A)
+  \tkzDrawSegment[radius](M,B)
+  \tkzDrawSegment[radius](M,C)
+  \tkzLabelSegment(M,A){$r$}
+
+  \tkzLabelPoints[right](B)
+  \tkzLabelPoints[above](C)
+  \tkzLabelPoints[left](A)
+  \tkzLabelPoints[above right](M)
+
+
+\end{tikzpicture}
+\end{document}
