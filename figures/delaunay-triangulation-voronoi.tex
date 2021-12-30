@@ -84,7 +84,10 @@
 \usetikzlibrary{arrows.meta}
 
 \begin{document}
-\begin{tikzpicture}
+\begin{tikzpicture}[
+  delaunay/.style = {thin, dotted},
+  voronoi/.style = {}
+]
 
   \tkzDefPoint(-0.5,0.0){min}
   \tkzDefPoint(2.5,3.0){max}
@@ -99,15 +102,45 @@
   \tkzDefPoint(2.0,2.0){v7}
 
   % Convex Hull
-  \tkzDrawSegments(v0,v1 v1,v6 v6,v7 v7,v3 v3,v4 v4,v0)
-  \tkzDrawSegments(v2,v0 v2,v4 v2,v3 v2,v1)
-  \tkzDrawSegments(v5,v2 v5,v6 v5,v7 v5,v1 v5,v3)
+  \tkzDrawSegments[delaunay](v0,v1 v1,v6 v6,v7 v7,v3 v3,v4 v4,v0)
+  \tkzDrawSegments[delaunay](v2,v0 v2,v4 v2,v3 v2,v1)
+  \tkzDrawSegments[delaunay](v5,v2 v5,v6 v5,v7 v5,v1 v5,v3)
 
   \tkzDrawPoints(v0,v1,v2,v3,v4,v5,v6,v7)
   % \tkzLabelPoints(v0,v1,v2,v3,v4,v5,v6,v7)
 
-  % \tkzCircumCenter(v3,v5,v7)\tkzGetPoint{M}
-  % \tkzDrawCircle(M,v3)
+  \tkzCircumCenter(v0,v1,v2)\tkzGetPoint{w0}
+  \tkzCircumCenter(v1,v2,v5)\tkzGetPoint{w1}
+  \tkzCircumCenter(v1,v5,v6)\tkzGetPoint{w2}
+  \tkzCircumCenter(v5,v6,v7)\tkzGetPoint{w3}
+  \tkzCircumCenter(v3,v5,v7)\tkzGetPoint{w4}
+  \tkzCircumCenter(v2,v3,v5)\tkzGetPoint{w5}
+  \tkzCircumCenter(v2,v3,v4)\tkzGetPoint{w6}
+  \tkzCircumCenter(v0,v2,v4)\tkzGetPoint{w7}
+
+  \tkzDefLine[mediator](v0,v1)\tkzGetPoints{u0a}{u0b}
+  \tkzDrawSegments[voronoi](u0b,w0)
+
+  \tkzDefLine[mediator](v1,v6)\tkzGetPoints{u1a}{u1b}
+  \tkzDrawSegments[voronoi](u1b,w2)
+
+  \tkzDefLine[mediator](v6,v7)\tkzGetPoints{u2a}{u2b}
+  \tkzDrawSegments[voronoi](u2b,w3)
+
+  \tkzDefLine[mediator](v3,v7)\tkzGetPoints{u3a}{u3b}
+  \tkzDrawSegments[voronoi](u3a,w4)
+
+  \tkzDefLine[mediator](v3,v4)\tkzGetPoints{u4a}{u4b}
+  \tkzDrawSegments[voronoi](u4b,w6)
+
+  \tkzDefLine[mediator](v4,v0)\tkzGetPoints{u5a}{u5b}
+  \tkzDrawSegments[voronoi](u5b,w7)
+
+  \tkzDrawSegments[voronoi](w0,w1 w1,w2 w2,w3 w3,w4 w4,w5 w5,w6 w6,w7 w7,w0)
+  \tkzDrawSegments[voronoi](w1,w5)
+
+  % \tkzDrawPoints(w0,w1,w2,w3,w4,w5,w6,w7)
+  % \tkzLabelPoints(w0,w1,w2,w3,w4,w5,w6,w7)
 
 \end{tikzpicture}
 \end{document}

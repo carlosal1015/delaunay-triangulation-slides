@@ -83,8 +83,12 @@
 \usetikzlibrary {positioning}
 \usetikzlibrary{arrows.meta}
 
+\definecolor{accent}{rgb}{0.0,0.5,0.8}
+
 \begin{document}
-\begin{tikzpicture}
+\begin{tikzpicture}[
+  hull/.style = {accent}
+]
 
   \tkzDefPoint(-0.5,0.0){min}
   \tkzDefPoint(2.5,3.0){max}
@@ -99,7 +103,7 @@
   \tkzDefPoint(2.0,2.0){v7}
 
   % Convex Hull
-  \tkzDrawSegments(v0,v1 v1,v6 v6,v7 v7,v3 v3,v4 v4,v0)
+  \tkzDrawSegments[hull](v0,v1 v1,v6 v6,v7 v7,v3 v3,v4 v4,v0)
   \tkzDrawSegments(v2,v0 v2,v4 v2,v3 v2,v1)
   \tkzDrawSegments(v5,v2 v5,v6 v5,v7 v5,v1 v5,v3)
 
