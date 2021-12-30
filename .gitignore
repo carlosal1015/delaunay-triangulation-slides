@@ -9,4 +9,6 @@ svg-inkscape
 
 !makefile
 
+!images/**
+
 !.git*
