@@ -1,0 +1,42 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+
+\usepackage{times}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{accent}{rgb}{0.9,0.9,0.9}
+
+\begin{document}
+\begin{tikzpicture}[
+  >={Stealth[scale=1.2]},
+]
+
+  \tkzDefPoint(-1.0,-0.8){min}
+  \tkzDefPoint(3.0,3.0){max}
+
+  \tkzDefPoint(0,0){A}
+  \tkzDefPoint(2.5,0.5){B}
+  \tkzDefPoint(1.5,2.5){C}
+
+  \tkzDrawSegments(A,B B,C C,A)
+  \tkzDrawPoint(A)
+  \tkzDrawPoint(B)
+  \tkzDrawPoint(C)
+
+  \tkzLabelPoints[right](B)
+  \tkzLabelPoints[above](C)
+  \tkzLabelPoints[left](A)
+
+  \tkzInCenter(A,B,C)\tkzGetPoint{M}
+  \tkzDefPointOnCircle[center=M,radius=5.5mm,angle=90]\tkzGetPoint{U}
+  \tkzDefPointOnCircle[center=M,radius=5.5mm,angle=80]\tkzGetPoint{V}
+  %\tkzDrawPoint(M)
+  %\tkzDrawCircle[R](M,5.5mm)
+  \tkzDrawArc[color=black,->](M,U)(V)
+
+\end{tikzpicture}
+\end{document}

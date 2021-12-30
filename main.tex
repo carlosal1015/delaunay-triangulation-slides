@@ -221,26 +221,63 @@
 \end{frame}
 
 \section{Geometric Primitives}
-\begin{frame}{Geometric Primitives: Counter-Clockwise}
+\begin{frame}{Geometric Primitives: Counterclockwise}
+  \begin{minipage}[c]{0.4\textwidth}
+    %\begin{figure}
+      \centering
+      \includegraphics{figures/triangle-counterclockwise.pdf}
+    %\end{figure}
+  \end{minipage}
+  \hfill
+  $\longleftrightarrow$
+  \hfill
+  \begin{minipage}[c]{0.4\textwidth}
+    %\begin{figure}
+      \centering
+      \includegraphics{figures/triangle-clockwise.pdf}
+    %\end{figure}
+  \end{minipage}
+
+  Counterclockwise Order
+  \pause
+  $\quad\iff\quad$ $C$ is left of $\overline{AB}$
+
+  \bigskip
+
+  \pause
+  \begin{mybox}
   \[
+    0 <
     \begin{vmatrix}
       A_x & A_y & 1 \\
       B_x & B_y & 1 \\
       C_x & C_y & 1 \\
     \end{vmatrix}
-    > 0
+    \pause
+    =
+    \begin{vmatrix}
+      B_x - A_x & B_y - A_y \\
+      C_x - A_x & C_y - A_y \\
+    \end{vmatrix}
+    \pause
+    =
+    \det
+    \begin{pmatrix}
+      B-A && C-A
+    \end{pmatrix}
   \]
+  \end{mybox}
 \end{frame}
 
 \begin{frame}{Geometric Primitives: Inside Circumcircle}
   \[
+    0 <
     \begin{vmatrix}
       A_x & A_y & A_x^2 + A_y^2 & 1 \\
       B_x & B_y & B_x^2 + B_y^2 & 1 \\
       C_x & C_y & C_x^2 + C_y^2 & 1 \\
       D_x & D_y & D_x^2 + D_y^2 & 1 \\
     \end{vmatrix}
-    > 0
   \]
 \end{frame}
 
