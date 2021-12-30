@@ -1,0 +1,64 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+
+\usepackage{times}
+
+\usetikzlibrary {positioning}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{accent}{rgb}{0.9,0.9,0.9}
+
+\begin{document}
+\begin{tikzpicture}[%
+  line/.style={thin, dashed},
+  circle/.style={thin},
+  >={Stealth[scale=1.2]},
+]
+
+  \tkzDefPoint(-1.0,-0.8){min}
+  \tkzDefPoint(3.0,3.0){max}
+
+  \tkzDefPoint(0,0){A}
+  \tkzDefPoint(2.5,0.5){B}
+  \tkzDefPoint(1.5,2.5){C}
+  \tkzDefPoint(0.1,2.0){D}
+  \tkzDefPoint(-0.2,2.1){D'}
+
+  \draw[draw,fill=accent] (A)--(B)--(C);
+  \tkzDrawSegments(A,B B,C C,A)
+  \tkzDrawPoint(A)
+  \tkzDrawPoint(B)
+  \tkzDrawPoint(C)
+  \tkzDrawPoints(D,D')
+
+  \tkzInCenter(A,B,C)\tkzGetPoint{M}
+  \tkzDefPointOnCircle[center=M,radius=5.5mm,angle=90]\tkzGetPoint{U}
+  \tkzDefPointOnCircle[center=M,radius=5.5mm,angle=80]\tkzGetPoint{V}
+  \tkzDrawArc[color=black,->](M,U)(V)
+
+  % circumcircle
+  \tkzCircumCenter(A,B,C)\tkzGetPoint{M}
+  %\tkzDrawPoint(M)
+  \tkzDrawCircle[circle](M,A)
+
+  \tkzDrawSegment[line](D,A)
+  \tkzDrawSegment[line](D,C)
+
+  \tkzDrawSegment[line](D',A)
+  \tkzDrawSegment[line](D',C)
+
+  %\tkzDrawSegment[line](M,C)
+  %\tkzLabelSegment(M,A){$r$}
+
+  \tkzLabelPoints[right](B)
+  \tkzLabelPoints[above](C)
+  \tkzLabelPoints[left](A)
+  \tkzLabelPoints[below right](D)
+  \tkzLabelPoints[above left](D')
+  %\tkzLabelPoints[above right](M)
+
+
+\end{tikzpicture}
+\end{document}

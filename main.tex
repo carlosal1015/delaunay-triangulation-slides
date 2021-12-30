@@ -270,15 +270,30 @@
 \end{frame}
 
 \begin{frame}{Geometric Primitives: Inside Circumcircle}
-  \[
-    0 <
-    \begin{vmatrix}
-      A_x & A_y & A_x^2 + A_y^2 & 1 \\
-      B_x & B_y & B_x^2 + B_y^2 & 1 \\
-      C_x & C_y & C_x^2 + C_y^2 & 1 \\
-      D_x & D_y & D_x^2 + D_y^2 & 1 \\
-    \end{vmatrix}
-  \]
+  \pause
+  \begin{minipage}[c]{0.49\textwidth}
+    \begin{mybox}
+    \[
+      0 <
+      \begin{vmatrix}
+        A_x & A_y & A_x^2 + A_y^2 & 1 \\
+        B_x & B_y & B_x^2 + B_y^2 & 1 \\
+        C_x & C_y & C_x^2 + C_y^2 & 1 \\
+        D_x & D_y & D_x^2 + D_y^2 & 1 \\
+      \end{vmatrix}
+    \]
+    %\[
+    %  =
+    %  \scalarProduct{x}{\mathrm{adj}\begin{pmatrix}u & v \end{pmatrix}^\mathrm{T} \begin{pmatrix}\norm{u}^2 \\ \norm{v}^2 \end{pmatrix}} - \det\begin{pmatrix}u & v \end{pmatrix}\norm{x}^2
+    %\]
+    \end{mybox}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}
+    \center
+    \onslide<1->
+    \includegraphics[width=0.9\textwidth]{figures/inside-circumcircle.pdf}
+  \end{minipage}
 \end{frame}
 
 \section{Data Structures}
