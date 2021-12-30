@@ -12,6 +12,7 @@
 
 \begin{document}
 \begin{tikzpicture}[
+  line/.style = {thin,dashed},
   >={Stealth[scale=1.2]},
 ]
 
@@ -22,14 +23,15 @@
   \tkzDefPoint(2.5,0.5){C}
   \tkzDefPoint(1.5,2.5){B}
 
+  \tkzDrawLines[line](A,B)
   \tkzDrawSegments(A,B B,C C,A)
   \tkzDrawPoint(A)
   \tkzDrawPoint(B)
   \tkzDrawPoint(C)
 
   \tkzLabelPoints[right](C)
-  \tkzLabelPoints[above](B)
-  \tkzLabelPoints[left](A)
+  \tkzLabelPoints[above left](B)
+  \tkzLabelPoints[above left](A)
 
   \tkzInCenter(A,B,C)\tkzGetPoint{M}
   \tkzDefPointOnCircle[center=M,radius=5.5mm,angle=90]\tkzGetPoint{U}
