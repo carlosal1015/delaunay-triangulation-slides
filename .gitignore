@@ -7,6 +7,8 @@ svg-inkscape
 !references.bib
 !*.pdf
 
+!*.cpp
+
 !makefile
 
 !images/**
