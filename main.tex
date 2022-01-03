@@ -316,7 +316,7 @@
 \section{Data Structure}
   \begin{frame}{Data Structure: Quad-Edge}
     \begin{minipage}[c]{0.49\textwidth}
-      Edge-Based Data Structure:
+      Edge-Based List-Like Data Structure:
       \onslide<+->
       \begin{itemize}
         \item<+-> Directed edges for vertices
@@ -354,7 +354,42 @@
     \end{minipage}
   \end{frame}
 
+  \begin{frame}{Data Structure: Quad-Edge Functions}
+    \center
+    \includegraphics[width=0.49\textwidth]{figures/quad-edge-vertex-functions.pdf}
+    \hfill
+    \includegraphics[width=0.49\textwidth]{figures/quad-edge-face-functions.pdf}
+  \end{frame}
+
+  \begin{frame}{Data Structure: Quad-Edge Operations}
+    \begin{itemize}
+      \item edge functions
+      \item create edge
+      \item splice
+      \item connect
+      \item delete edge
+    \end{itemize}
+  \end{frame}
+
 \section{Algorithm}
+  \begin{frame}{Algorithm: Overview}
+    \begin{enumerate}
+      \item Sort points by increasing $x$ coordinate
+    \end{enumerate}
+    \begin{enumerate}
+      \item If number of points is less than four, create an edge or a triangle.
+      \item Separate points into left and right half
+      \item Compute the lower common tangent and make it a cross edge
+      \item Merge Loop to insert crossing edges until upper tangent is reached
+      \item Return left and right convex hull edge
+    \end{enumerate}
+    \begin{enumerate}
+      \item Remove edges from left partition that fail circle test
+      \item Remove edges from right partition that fail circle test
+      \item Check for upper tangent
+      \item Insert crossing edge by using circle test
+    \end{enumerate}
+  \end{frame}
 
 \section{Implementation}
   \begin{frame}{Implementation}
