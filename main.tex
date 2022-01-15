@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169]{beamer}
+\documentclass[aspectratio=169,fleqn]{beamer}
 \PassOptionsToPackage{english}{babel}
 \usepackage{standardslides}
 
@@ -337,14 +337,30 @@
 
   \begin{frame}{Data Structure: Quad-Edge Implementation}
     \begin{minipage}[c]{0.49\textwidth}
+      %\onslide<1>
       \only<1>{%
-      \begin{mybox}
-        \inputCodeBlock{listings/quad-edge-algebra.cpp}
-      \end{mybox}}%
+        %\begin{mybox}
+        %  \inputCodeBlock{listings/quad-edge-algebra.cpp}
+        %\end{mybox}}%
+        \begin{figure}
+          \includegraphics[width=\textwidth]{figures/quad-edge-struct.pdf}
+        \end{figure}%
+      }%
+      %\onslide<2>
       \only<2>{%
-      \begin{mybox}
-        \inputCodeBlock{listings/quad-edge-algebra-operations.cpp}
-      \end{mybox}}%
+        %\begin{mybox}
+        %  \inputCodeBlock{listings/quad-edge-algebra-operations.cpp}
+        %\end{mybox}}%
+        \begin{figure}
+          \includegraphics[width=\textwidth]{figures/quad-edge-struct-rot.pdf}
+        \end{figure}%
+        \[
+          \function{\mathrm{rot}}{\setNatural_0}{\setNatural_0}
+        \]
+        \[
+          \mathrm{rot}(x) = 4 \cdot \floorBrackets{\frac{x}{4}} + (x \mod 4)
+        \]%
+      }%
     \end{minipage}
     \hfill
     \begin{minipage}[c]{0.49\textwidth}
