@@ -339,12 +339,14 @@
     \begin{minipage}[c]{0.49\textwidth}
       %\onslide<1>
       \only<1>{%
-        %\begin{mybox}
-        %  \inputCodeBlock{listings/quad-edge-algebra.cpp}
-        %\end{mybox}}%
         \begin{figure}
           \includegraphics[width=\textwidth]{figures/quad-edge-struct.pdf}
         \end{figure}%
+        \begin{mybox}
+          \center
+          \vspace{-1em}
+          \inputCodeBlock{listings/quad-edge-algebra.cpp}
+        \end{mybox}%
       }%
       %\onslide<2>
       \only<2>{%
@@ -354,12 +356,14 @@
         \begin{figure}
           \includegraphics[width=\textwidth]{figures/quad-edge-struct-rot.pdf}
         \end{figure}%
-        \[
-          \function{\mathrm{rot}}{\setNatural_0}{\setNatural_0}
-        \]
-        \[
-          \mathrm{rot}(x) = 4 \cdot \floorBrackets{\frac{x}{4}} + (x \mod 4)
-        \]%
+        \begin{mybox}
+          \[
+            \function{\mathrm{rot}}{\setNatural_0}{\setNatural_0}
+          \]
+          \[
+            \mathrm{rot}(x) = 4 \cdot \floorBrackets{\frac{x}{4}} + (x+1 \mod 4)
+          \]
+        \end{mybox}%
       }%
     \end{minipage}
     \hfill
