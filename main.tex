@@ -66,6 +66,9 @@
   \includegraphics[width=\paperwidth,height=\paperheight]{images/background.png}
 }
 
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
 \title{%
   Algorithmical Geometry: Delaunay Triangulation%
 }
@@ -393,22 +396,122 @@
 
 \section{Algorithm}
   \begin{frame}{Algorithm: Overview}
-    \begin{enumerate}
-      \item Sort points by increasing $x$ coordinate
-    \end{enumerate}
-    \begin{enumerate}
-      \item If number of points is less than four, create an edge or a triangle.
-      \item Separate points into left and right half
-      \item Compute the lower common tangent and make it a cross edge
-      \item Merge Loop to insert crossing edges until upper tangent is reached
-      \item Return left and right convex hull edge
-    \end{enumerate}
-    \begin{enumerate}
-      \item Remove edges from left partition that fail circle test
-      \item Remove edges from right partition that fail circle test
-      \item Check for upper tangent
-      \item Insert crossing edge by using circle test
-    \end{enumerate}
+    %\only<1>{%
+      \onslide<+->
+      \onslide<+->
+      \begin{mybox}
+        \textbf{Triangulation Algorithm}
+        \begin{enumerate}
+          \item<+-> Sort the given point set by increasing $x$ coordinate.
+          \item<+-> Triangulate sorted point set.
+        \end{enumerate}
+      \end{mybox}%
+      \bigskip
+      %\begin{itemize}
+      %  \item Preprocessing Step with Complexity $\mathscr{O}(n\log n)$
+      %  \item Sorting of points makes split constant time operation
+      %\end{itemize}%
+    %}%
+    %\only<2>{%
+    \bigskip
+      \onslide<+->
+      \begin{mybox}
+        \textbf{Subroutine: Triangulate}
+        \begin{enumerate}
+          \item<+-> If point count is smaller than four, make edge or triangle and return.
+          %\item If $\#\mathscr{V}<4$ then make $\mathscr{T}(\mathscr{V})$ an edge or a triangle and break
+          %\item $\mathbf{if}\ \#\mathscr{V}<4 \ \mathbf{then}$ \\ $\quad \mathscr{T}(\mathscr{V}) \longleftarrow \mathrm{edge\_or\_triangle}(\mathscr{V})$ \\ $\quad \mathbf{return}$
+            %\begin{enumerate}
+            %  \item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathrm{edge or triangle}(\mathscr{V})$
+            %  \item $\mathrm{break}$
+            %\end{enumerate}
+          %\item Separate $\mathscr{V}$ into halves $\mathscr{L}$ and $\mathscr{R}$
+          \item<+-> Split point set into left and right half.
+          \item<+-> Triangulate left and right half.
+          \item<+-> Merge left and right triangulations.
+          %\item $(\mathscr{L},\mathscr{R}) \longleftarrow \mathrm{split}(\mathscr{V})$
+          %\item Triangulate $\mathscr{L}$ and $\mathscr{R}$ into $\mathscr{T}(\mathscr{L})$ and $\mathscr{T}(\mathscr{R})$
+          %\item $(\mathscr{T}(\mathscr{L}), \mathscr{T}(\mathscr{R})) \longleftarrow (\mathrm{triangulate}(\mathscr{L}),\mathrm{triangulate}(\mathscr{R}))$
+          %\item $\mathscr{T}(\mathscr{L}) \longleftarrow \mathrm{triangulate}(\mathscr{L})$
+          %\item $\mathscr{T}(\mathscr{R}) \longleftarrow \mathrm{triangulate}(\mathscr{R})$
+          %\item Merge $\mathscr{T}(\mathscr{L})$ and $\mathscr{T}(\mathscr{R})$
+          %\item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathrm{merge}(\mathscr{T}(\mathscr{L}), \mathscr{T}(\mathscr{R}))$
+        \end{enumerate}
+      \end{mybox}%
+      %\begin{itemize}
+      %  \item Divide-and-Conquer Algorithm
+      %  \item Key is merge step
+      %\end{itemize}%
+    %}%
+  \end{frame}
+
+  \begin{frame}{Algorithm: Merge Triangulations}
+    \onslide<+->
+    \onslide<+->
+    \begin{mybox}
+      \textbf{Subroutine: Merge Triangulations}
+      \begin{enumerate}
+        %\item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathscr{T}(\mathscr{L}) \cup \mathscr{T}(\mathscr{R})$
+        \item<+-> Compute and add lower common tangent.
+        %\item Find lower common tangent of $\mathscr{L}$ and $\mathscr{R}$
+        %\item $b \longleftarrow \mathrm{lower\_common\_tangent}(\mathscr{L}, \mathscr{R})$
+        %\item Add lower common tangent as $b$
+        %\item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathscr{T}(\mathscr{V}) \cup b$
+        %\item Loop until $b$ is upper common tangent:
+        \item<+-> Use lower common tangent as baseline.
+        \item<+-> Loop until baseline becomes upper common tangent:
+          \begin{enumerate}
+            \item<+-> Remove invalid edges adjacent to and above baseline.
+            \item<+-> Insert cross edge above baseline.
+            \item<+-> Make this cross edge the new baseline.
+          \end{enumerate}
+        %\item $\mathbf{while} \ b \neq \mathrm{upper\_common\_tangent}(\mathscr{L}, \mathscr{R})$
+        %  \begin{enumerate}
+        %    \item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathscr{T}(\mathscr{V}) \setminus \mathrm{invalid\_edges}(\mathscr{T}(\mathscr{L}), b)$
+        %    \item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathscr{T}(\mathscr{V}) \setminus \mathrm{invalid\_edges}(\mathscr{T}(\mathscr{R}), b)$
+        %    %\item Insert cross edge $c$ above $b$
+        %    \item $b \longleftarrow \mathrm{cross\_edge}(\mathscr{T}(\mathscr{V}), b)$
+        %    \item $\mathscr{T}(\mathscr{V}) \longleftarrow \mathscr{T}(\mathscr{V}) \cup b$
+        %  \end{enumerate}
+      \end{enumerate}
+    \end{mybox}
+  \end{frame}
+
+  %\begin{frame}{Algorithm: Insert Cross Edges}
+  %  \begin{mybox}
+  %    \textbf{Subroutine: Remove Invalid Edge}
+  %    \begin{enumerate}
+  %      \item While adjacent edge lies in circumcircle
+  %      \item remove edge
+  %    \end{enumerate}
+  %  \end{mybox}%
+  %  \begin{mybox}
+  %    \textbf{Subroutine: Insert Cross Edge}
+  %    \begin{enumerate}
+  %      \item Insert cross edge by using circle test
+  %    \end{enumerate}
+  %  \end{mybox}%
+  %\end{frame}
+
+  %\begin{frame}{Algorithm: Lower Common Tangent}
+  %  \begin{mybox}
+  %    \textbf{Subroutine: Lower Common Tangent}
+  %    \begin{enumerate}
+  %      \item $l$ and $r$ as inner convex hull edges
+  %      \item Loop:
+  %      \begin{enumerate}
+  %        \item If $\mathrm{leftof}(\mathrm{o}(r), l)$ then $l \longleftarrow \mathrm{lnext}(l)$
+  %        \item If $\mathrm{rightof}(\mathrm{o}(l), r)$ then $r \longleftarrow \mathrm{rprev}(r)$
+  %        \item Else break
+  %      \end{enumerate}
+  %    \end{enumerate}
+  %  \end{mybox}
+  %\end{frame}
+
+  \begin{frame}{Algorithm: Correctness}
+  \end{frame}
+
+  \begin{frame}{Algorithm: Complexity}
   \end{frame}
 
 \section{Implementation}
@@ -422,7 +525,10 @@
 
 \section{Conclusions}
 
-\begin{frame}
+
+\setcounter{backupcounter}{\value{framenumber}}
+
+\begin{frame}[plain]
   \vfill
   \centering
   \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
@@ -433,7 +539,7 @@
   \vfill
 \end{frame}
 
-\begin{frame}
+\begin{frame}[plain]
   \frametitle{References}
   % \tiny
   \AtNextBibliography{\tiny}
@@ -442,5 +548,7 @@
     \printbibliography
   \end{multicols}
 \end{frame}
+
+\setcounter{framenumber}{\value{backupcounter}}
 
 \end{document}
