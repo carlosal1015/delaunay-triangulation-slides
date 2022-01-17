@@ -70,7 +70,7 @@
 \setbeamertemplate{navigation symbols}{}
 
 \title{%
-  Algorithmical Geometry: Delaunay Triangulation%
+  Algorithmical Geometry: \\ Computation of Delaunay Triangulations \\ Using a Divide-and-Conquer Algorithm%
 }
 % \subtitle{Master's Thesis Defense and Presentation}
 \author{Markus Pawellek}
@@ -100,8 +100,8 @@
   \hfill\parbox[t][7cm][l]{0.9\textwidth}{\tableofcontents}
 \end{frame}
 
-\section{Introduction}
-  \begin{frame}{Introduction}
+\section{Related Work}
+  \begin{frame}{Related Work}
     % !!!Here should be an image of a wireframe for a mesh or a 3D grid for FEM simulation.
     % \bigskip
     \begin{minipage}[c]{0.49\textwidth}
@@ -133,7 +133,7 @@
     \end{minipage}
   \end{frame}
 
-  \begin{frame}{Introduction: Previous Work}
+  \begin{frame}{Related Work: References}
     \small
     \onslide<+->
     \begin{description}
@@ -211,37 +211,26 @@
   \end{frame}
 
   \begin{frame}{Mathematical Preliminaries: Properties}
-    \begin{figure}
+    \begin{minipage}[c]{0.49\textwidth}
       \center
-      \onslide<1->
-      \includegraphics[scale=1.3]{figures/delaunay-triangulation.pdf}
-      \onslide<3->
-      \includegraphics[scale=1.3]{figures/delaunay-triangulation-convex-hull.pdf}
-      \onslide<4->
-      \includegraphics[scale=1.3]{figures/delaunay-triangulation-voronoi.pdf}
-    \end{figure}
-    \begin{itemize}
-      \onslide<2->
-      \item Optimality: maximization of the minimum angle of all angles
-      \onslide<3->
-      \item Convex hull is contained
-      \onslide<4->
-      \item Voronoi diagram is the dual
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{Mathematical Preliminaries: Properties of Delaunay Triangulation}
-    \begin{itemize}
-      \item Duality to Voronoi Diagram (also useful for proofs)
-      \item always exists -> proof
-      \item If no points are cocircular, unique -> proof
-      \item optimality: maximization of the minimum angle of all angles -> proof, reason why delaunay is good
-      \item boundary is convex hull
-    \end{itemize}
+      \only<1-4>{\includegraphics[width=\textwidth]{figures/delaunay-triangulation.pdf}}%
+      \only<5>{\includegraphics[width=\textwidth]{figures/delaunay-triangulation-convex-hull.pdf}}%
+      \only<6>{\includegraphics[width=\textwidth]{figures/delaunay-triangulation-voronoi.pdf}}%
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.49\textwidth}
+      \begin{itemize}
+        \item<2-> Existence is guaranteed
+        \item<3-> Unique if there are no four points that are cocircular
+        \item<4-> Optimality: maximization of the minimum angle of all angles
+        \item<5-> Convex hull is contained
+        \item<6-> Dual of Voronoi diagram
+      \end{itemize}
+    \end{minipage}
   \end{frame}
 
 \section{Geometric Primitives}
-  \begin{frame}{Geometric Primitives: Counterclockwise}
+  \begin{frame}{Geometric Primitives: Triangle Orientation}
     \begin{minipage}[c]{0.4\textwidth}
       %\begin{figure}
         \centering
@@ -258,8 +247,8 @@
       %\end{figure}
     \end{minipage}
 
-    Counterclockwise Order
     \pause
+    Counterclockwise Orientation
     $\quad\iff\quad$ $C$ is left of $\overline{AB}$
 
     \bigskip
@@ -293,20 +282,25 @@
     \pause
     \begin{minipage}[c]{0.49\textwidth}
       \begin{mybox}
-      \[
-        0 <
-        \begin{vmatrix}
-          A_x & A_y & A_x^2 + A_y^2 & 1 \\
-          B_x & B_y & B_x^2 + B_y^2 & 1 \\
-          C_x & C_y & C_x^2 + C_y^2 & 1 \\
-          D_x & D_y & D_x^2 + D_y^2 & 1 \\
-        \end{vmatrix}
-      \]
-      %\[
-      %  =
-      %  \scalarProduct{x}{\mathrm{adj}\begin{pmatrix}u & v \end{pmatrix}^\mathrm{T} \begin{pmatrix}\norm{u}^2 \\ \norm{v}^2 \end{pmatrix}} - \det\begin{pmatrix}u & v \end{pmatrix}\norm{x}^2
-      %\]
+        \[
+          0 <
+          \begin{vmatrix}
+            A_x & A_y & A_x^2 + A_y^2 & 1 \\
+            B_x & B_y & B_x^2 + B_y^2 & 1 \\
+            C_x & C_y & C_x^2 + C_y^2 & 1 \\
+            D_x & D_y & D_x^2 + D_y^2 & 1 \\
+          \end{vmatrix}
+        \]
+        \pause
+        \[
+          =
+          \begin{aligned}[t]
+            &\scalarProduct{x}{\mathrm{adj}\begin{pmatrix}u & v \end{pmatrix}^\mathrm{T} \begin{pmatrix}\norm{u}^2 \\ \norm{v}^2 \end{pmatrix}} \\
+            &- \det\begin{pmatrix}u & v \end{pmatrix}\norm{x}^2
+          \end{aligned}
+        \]
       \end{mybox}
+      $u \define B-A ,\quad v \define C-A ,\quad x \define D-A$
     \end{minipage}
     \hfill
     \begin{minipage}[c]{0.49\textwidth}
@@ -316,10 +310,11 @@
     \end{minipage}
   \end{frame}
 
-\section{Data Structure}
-  \begin{frame}{Data Structure: Quad-Edge}
+\section{Quad-Edge Data Structure}
+  \begin{frame}{Quad-Edge Data Structure: Scheme}
     \begin{minipage}[c]{0.49\textwidth}
-      Edge-Based List-Like Data Structure:
+      Edge-Based List-Like Data Structure \\
+      for Storing Neighbor Information:
       \onslide<+->
       \begin{itemize}
         \item<+-> Directed edges for vertices
@@ -338,7 +333,7 @@
     \end{minipage}
   \end{frame}
 
-  \begin{frame}{Data Structure: Quad-Edge Implementation}
+  \begin{frame}{Quad-Edge Data Structure: Implementation}
     \begin{minipage}[c]{0.49\textwidth}
       %\onslide<1>
       \only<1>{%
@@ -377,20 +372,18 @@
     \end{minipage}
   \end{frame}
 
-  \begin{frame}{Data Structure: Quad-Edge Functions}
-    \center
-    \includegraphics[width=0.49\textwidth]{figures/quad-edge-vertex-functions.pdf}
-    \hfill
-    \includegraphics[width=0.49\textwidth]{figures/quad-edge-face-functions.pdf}
-  \end{frame}
-
-  \begin{frame}{Data Structure: Quad-Edge Operations}
+  \begin{frame}{Quad-Edge Data Structure: Edge Functions and Operators}
+    \begin{figure}
+      \center
+      \includegraphics[height=0.6\textheight]{figures/quad-edge-vertex-functions.pdf}
+      \hspace{2em}
+      \includegraphics[height=0.6\textheight]{figures/quad-edge-face-functions.pdf}
+    \end{figure}
+    \onslide<+->
     \begin{itemize}
-      \item edge functions
-      \item create edge
-      \item splice
-      \item connect
-      \item delete edge
+      \item<+-> Create a new edge
+      \item<+-> Delete existing edge
+      \item<+-> Connect points by a new edge
     \end{itemize}
   \end{frame}
 
@@ -445,6 +438,20 @@
     %}%
   \end{frame}
 
+  \begin{frame}{Algorithm: Merge Triangulations Example}
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-empty.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-lct.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-circle-test.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-removal.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-circle-test-right.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-cross-edge-circle-test.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-cross-edge-insertion.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-second-circle-test.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-second-cross-edge.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-uct.pdf}}%
+    \only<+>{\includegraphics[width=\textwidth]{figures/merge-finish.pdf}}%
+  \end{frame}
+
   \begin{frame}{Algorithm: Merge Triangulations}
     \onslide<+->
     \onslide<+->
@@ -475,20 +482,12 @@
         %  \end{enumerate}
       \end{enumerate}
     \end{mybox}
-  \end{frame}
-
-  \begin{frame}{Algorithm: Merge Triangulations Example}
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-empty.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-lct.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-circle-test.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-removal.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-invalid-edge-circle-test-right.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-cross-edge-circle-test.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-cross-edge-insertion.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-second-circle-test.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-second-cross-edge.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-uct.pdf}}%
-    \only<+>{\includegraphics[width=\textwidth]{figures/merge-finish.pdf}}%
+    \begin{itemize}
+      \item linear complexity by using Euler's formula for planar graphs
+      \item computation of lower common tangent
+      \item circle test for adjacent edges
+      \item circle test for cross edge
+    \end{itemize}
   \end{frame}
 
   %\begin{frame}{Algorithm: Insert Cross Edges}
@@ -522,22 +521,73 @@
   %  \end{mybox}
   %\end{frame}
 
-  \begin{frame}{Algorithm: Correctness}
-  \end{frame}
-
   \begin{frame}{Algorithm: Complexity}
+    \begin{minipage}[c]{0.49\textwidth}
+      \begin{itemize}
+        \item Use master theorem
+        \item Merge step is linear in point count
+      \end{itemize}
+      \[
+        t(n) = 2 t\roundBrackets{\frac{n}{2}} + \mathscr{O}(n)
+      \]
+      \[
+        \mathscr{O}(n\log n)
+      \]
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.49\textwidth}
+      \begin{mybox}
+        \textbf{Subroutine: Triangulate}
+        \begin{enumerate}
+          \item If point count is smaller than four, make edge or triangle and return.
+          \item Split point set into left and right half.
+          \item Triangulate left and right half.
+          \item Merge left and right triangulations.
+        \end{enumerate}
+      \end{mybox}%
+    \end{minipage}
   \end{frame}
 
-\section{Implementation}
-  \begin{frame}{Implementation}
+  \begin{frame}{Algorithm: Correctness}
+    Proof by induction: \\
+    Show that for two given Delaunay triangulations $\mathscr{T}(\mathscr{L})$ and $\mathscr{T}(\mathscr{R})$ separated by a vertical line the merge subroutine generates a Delaunay triangulation $\mathscr{T}(\mathscr{L}\cup\mathscr{R})$.
+    \begin{itemize}
+      \item For two Delaunay triangulations separated by a vertical line, it is enough to remove inner edges and insert cross edges.
+      \item Common tangents are elements of the Delaunay triangulation.
+      \item Removed edges are indeed not Delaunay.
+      \item Insertion of cross edges generates new Delaunay triangle.
+      \item There are no other edges that have to be removed.
+      \item Theorem: Algorithm is correct.
+    \end{itemize}
+  \end{frame}
+
+\section{Implementation Notes}
+  \begin{frame}{Implementation Notes}
     \begin{itemize}
       \item Geometric Primitives need exact computation and therefore arbitrary precision
+      \item still no robust split, use Dwyer instead (no sorting, parallelization)
+      \item triangular data structure increases speed but algorithm is more complicated
+      \item Divide-and-conquer variant seems to be most powerful and robust
     \end{itemize}
   \end{frame}
 
 \section{Applications}
 
 \section{Conclusions}
+  \begin{frame}{Conclusions}
+    \textbf{Summary:}
+    \begin{itemize}
+      \item Delaunay triangulation can be generated by given divide-and-conquer algorithm in $\mathscr{O}(n\log n)$
+      \item Data structure needs to store neighbor information
+    \end{itemize}
+    \bigskip
+    \textbf{Future Work:}
+    \begin{itemize}
+      \item Use triangular data structure instead of quad-edge data structure
+      \item Use \citeauthor{dwyer1987}'s approach to make algorithm more robust
+      \item Parallelization
+    \end{itemize}
+  \end{frame}
 
 
 \setcounter{backupcounter}{\value{framenumber}}
