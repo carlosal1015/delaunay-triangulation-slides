@@ -63,7 +63,7 @@
 \def\UrlBigBreaks{\do\/\do-\do:}
 
 \setbeamertemplate{background}{
-  \includegraphics[width=\paperwidth,height=\paperheight]{images/background.png}
+  \includegraphics[width=\paperwidth,height=\paperheight]{images/background-tessellation.png}
 }
 
 \setbeamertemplate{footline}[frame number]
@@ -81,42 +81,55 @@
 
 \selectlanguage{english}
 
-{ % all template changes are local to this group.
-  \setbeamertemplate{navigation symbols}{}
-  \begin{frame}<article:0>[plain]
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[at=(current page.center)] {
-        \includegraphics[keepaspectratio,
-                         width=1.2\paperwidth,
-                         height=\paperheight]{images/banner.png}
-      };
-    \end{tikzpicture}
-  \end{frame}
-}
+%{ % all template changes are local to this group.
+%  \setbeamertemplate{navigation symbols}{}
+%  \begin{frame}<article:0>[plain]
+%    \begin{tikzpicture}[remember picture,overlay]
+%      \node[at=(current page.center)] {
+%        \includegraphics[keepaspectratio,
+%                         width=1.2\paperwidth,
+%                         height=\paperheight]{images/banner.png}
+%      };
+%    \end{tikzpicture}
+%  \end{frame}
+%}
 
-\frame{\titlepage}
-\begin{frame}{Outline}
+\begin{frame}[plain]{}
+  \centering
+  \includegraphics[height=\textheight]{images/lenna.png}
+\end{frame}
+
+\begin{frame}[plain]{}
+  \centering
+  \includegraphics[height=\textheight,trim={10px 10 10 45},clip]{images/lenna-tessellation.png}
+\end{frame}
+
+\frame[plain]{\titlepage}
+\begin{frame}[plain]{Outline}
   \footnotesize
   \hfill\parbox[t][7cm][l]{0.9\textwidth}{\tableofcontents}
 \end{frame}
+
+\setcounter{framenumber}{0}
 
 \section{Related Work}
   \begin{frame}{Related Work}
     % !!!Here should be an image of a wireframe for a mesh or a 3D grid for FEM simulation.
     % \bigskip
-    \begin{minipage}[c]{0.49\textwidth}
-      \begin{figure}
-        \centering
-        \includesvg[width=0.9\textwidth]{images/mesh-generation.svg}
-      \end{figure}
-      {%
-        \fontsize{4}{5}\selectfont%
-        *\url{https://upload.wikimedia.org/wikipedia/commons/b/b8/Approx-3tori.svg}, December 29, 2021%
-      }
-    \end{minipage}
-    \hfill
-    \begin{minipage}[c]{0.45\textwidth}
-      \pause
+    %\begin{minipage}[c]{0.49\textwidth}
+    %  \begin{figure}
+    %    \centering
+        %\includesvg[width=0.9\textwidth]{images/mesh-generation.svg}
+    %    \includegraphics[width=0.9\textwidth,trim={10px 10 10 45},clip]{images/mosaic.png}
+    %  \end{figure}
+      %{%
+      %  \fontsize{4}{5}\selectfont%
+      %  *\url{https://upload.wikimedia.org/wikipedia/commons/b/b8/Approx-3tori.svg}, December 29, 2021%
+      %}
+    %\end{minipage}
+    %\hfill
+    %\begin{minipage}[c]{0.45\textwidth}
+    %  \pause
       Educational Problems:
       \begin{itemize}
         \pause
@@ -130,7 +143,7 @@
         \pause
         \item Varying Data Structures
       \end{itemize}
-    \end{minipage}
+    %\end{minipage}
   \end{frame}
 
   \begin{frame}{Related Work: References}
@@ -482,11 +495,13 @@
         %  \end{enumerate}
       \end{enumerate}
     \end{mybox}
+    \onslide<+->
+    \textbf{Details:}
     \begin{itemize}
-      \item linear complexity by using Euler's formula for planar graphs
-      \item computation of lower common tangent
-      \item circle test for adjacent edges
-      \item circle test for cross edge
+      %\item linear complexity by using Euler's formula for planar graphs: $v-e+f=2$
+      \item<+-> Computation of lower common tangent
+      \item<+-> Circle test for adjacent edges
+      \item<+-> Circle test for cross edge
     \end{itemize}
   \end{frame}
 
@@ -522,25 +537,34 @@
   %\end{frame}
 
   \begin{frame}{Algorithm: Complexity}
-    \begin{minipage}[c]{0.49\textwidth}
+    \onslide<+->
+    \begin{minipage}[c]{0.4\textwidth}
       \begin{itemize}
-        \item Use master theorem
-        \item Merge step is linear in point count
+        \item<+-> $n\in\setNatural$ points
+        \item<+-> $T(n)$ runtime
+        \item<+-> Use master theorem
+        \item<+-> Complexity of merge is linear in worst case
       \end{itemize}
+      \medskip
+      \onslide<+->
       \[
-        t(n) = 2 t\roundBrackets{\frac{n}{2}} + \mathscr{O}(n)
+        T(n) = 2 T\roundBrackets{\frac{n}{2}} + \mathscr{O}(n)
       \]
-      \[
-        \mathscr{O}(n\log n)
-      \]
+      \onslide<+->
+      \begin{mybox}
+        \[
+          T(n) = \mathscr{O}(n\log n)
+        \]
+      \end{mybox}
     \end{minipage}
     \hfill
+    \onslide<1->
     \begin{minipage}[c]{0.49\textwidth}
       \begin{mybox}
         \textbf{Subroutine: Triangulate}
         \begin{enumerate}
-          \item If point count is smaller than four, make edge or triangle and return.
-          \item Split point set into left and right half.
+          \item If $n\leq 3$, make edge or triangle and return.
+          \item Split point set into left and right.
           \item Triangulate left and right half.
           \item Merge left and right triangulations.
         \end{enumerate}
@@ -549,43 +573,48 @@
   \end{frame}
 
   \begin{frame}{Algorithm: Correctness}
-    Proof by induction: \\
-    Show that for two given Delaunay triangulations $\mathscr{T}(\mathscr{L})$ and $\mathscr{T}(\mathscr{R})$ separated by a vertical line the merge subroutine generates a Delaunay triangulation $\mathscr{T}(\mathscr{L}\cup\mathscr{R})$.
+    %Proof by induction: \\
+    %Show that for two given Delaunay triangulations $\mathscr{T}(\mathscr{L})$ and $\mathscr{T}(\mathscr{R})$ separated by a vertical line the merge subroutine generates a Delaunay triangulation $\mathscr{T}(\mathscr{L}\cup\mathscr{R})$.
+    \onslide<+->
     \begin{itemize}
-      \item For two Delaunay triangulations separated by a vertical line, it is enough to remove inner edges and insert cross edges.
-      \item Common tangents are elements of the Delaunay triangulation.
-      \item Removed edges are indeed not Delaunay.
-      \item Insertion of cross edges generates new Delaunay triangle.
-      \item There are no other edges that have to be removed.
-      \item Theorem: Algorithm is correct.
+      \item<+-> Proof by induction for merging left and right half
+      \item<+-> For two Delaunay triangulations separated by a vertical line, it is enough to remove inner edges and insert cross edges.
+      \item<+-> Common tangents are elements of the Delaunay triangulation.
+      \item<+-> Removed edges are indeed not Delaunay.
+      \item<+-> Insertion of cross edges generates new Delaunay triangle.
+      \item<+-> There are no other edges that have to be removed.
+      \item<+-> Algorithm is correct
     \end{itemize}
   \end{frame}
 
 \section{Implementation Notes}
   \begin{frame}{Implementation Notes}
     \begin{itemize}
-      \item Geometric Primitives need exact computation and therefore arbitrary precision
-      \item still no robust split, use Dwyer instead (no sorting, parallelization)
-      \item triangular data structure increases speed but algorithm is more complicated
-      \item Divide-and-conquer variant seems to be most powerful and robust
+      \item<+-> Geometric primitives need to be robustly computed
+      \item<+-> Still no robust split, use Dwyer algorithm instead %(no sorting, parallelization)
+      \item<+-> Triangular data structure increases speed but algorithm is more complicated
+      \item<+-> Divide-and-conquer variant seems to be most powerful and robust
     \end{itemize}
   \end{frame}
 
-\section{Applications}
+%\section{Applications}
 
 \section{Conclusions}
   \begin{frame}{Conclusions}
+    \onslide<+->
     \textbf{Summary:}
     \begin{itemize}
-      \item Delaunay triangulation can be generated by given divide-and-conquer algorithm in $\mathscr{O}(n\log n)$
-      \item Data structure needs to store neighbor information
+      \item<+-> Delaunay triangulation can be generated by given divide-and-conquer algorithm in $\mathscr{O}(n\log n)$
+      \item<+-> Data structure needs to store neighbor information
     \end{itemize}
     \bigskip
+    \onslide<+->
     \textbf{Future Work:}
     \begin{itemize}
-      \item Use triangular data structure instead of quad-edge data structure
-      \item Use \citeauthor{dwyer1987}'s approach to make algorithm more robust
-      \item Parallelization
+      \item<+-> Use triangular data structure instead of quad-edge data structure
+      \item<+-> Use \citeauthor{dwyer1987}'s approach to make algorithm more robust
+      \item<+-> Parallelization
+      \item<+-> Multi-dimensional Implementation
     \end{itemize}
   \end{frame}
 
